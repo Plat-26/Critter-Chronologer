@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-//@Service
+@Service
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
@@ -25,14 +25,15 @@ public class ScheduleService {
     }
 
     public List<Schedule> getByPet(Long petId){
-        return scheduleRepository.findAllByPets(petId);
+        return scheduleRepository.findAllByPetsId(petId);
     }
 
     public List<Schedule> getByEmployee(Long employeeId) {
-        return scheduleRepository.findAllByEmployees(employeeId);
+        return scheduleRepository.findAllByEmployeesId(employeeId);
     }
 
+    @Transactional
     public List<Schedule> getByCustomer(Long customerId) {
-        return scheduleRepository.findAllByEmployees(customerId);
+        return scheduleRepository.findAllByPetsCustomerId(customerId);
     }
 }

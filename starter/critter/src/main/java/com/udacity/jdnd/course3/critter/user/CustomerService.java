@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-//@Service
+@Service
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
@@ -27,7 +27,7 @@ public class CustomerService {
     }
 
     public Customer getCustomerByPetId(long petId) {
-        return customerRepository.findByPets(petId).orElseThrow(
+        return customerRepository.findByPetsId(petId).orElseThrow(
                 () -> new IllegalStateException("This pet id is not mapped to a customer")
         );
     }

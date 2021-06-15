@@ -16,8 +16,8 @@ import java.util.Set;
  * Includes requests for both customers and employees. Splitting this into separate user and customer controllers
  * would be fine too, though that is not part of the required scope for this class.
  */
-//@RestController
-//@RequestMapping("/user")
+@RestController
+@RequestMapping("/user")
 public class UserController {
     private final CustomerService customerService;
     private final EmployeeService employeeService;
@@ -67,13 +67,25 @@ public class UserController {
 
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        List<Employee> employees = employeeService.findForService(employeeDTO);
+        return convertEmployeeListToDTOList(employees);
+    }
+
+    private List<EmployeeDTO> convertEmployeeListToDTOList(List<Employee> employees) {
+        if(employees != null) {
+            List<EmployeeDTO> employeeDTOS = new ArrayList<>();
+            for(Employee employee : employees) {
+                employeeDTOS.add(convertEmployeeEntityToDTO(employee));
+            }
+            return employeeDTOS;
+        }
+        return new ArrayList<>();
     }
 
     private Customer convertCustomerDTOToEntity(CustomerDTO customerDTO) {
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDTO, customer);
-        customer.setPets(convertPetIdsToPets(customerDTO.getPetIds()));
+//        customer.setPets(convertPetIdsToPets(customerDTO.getPetIds()));
         return customer;
     }
 
@@ -92,7 +104,6 @@ public class UserController {
         return customerDTOS;
     }
 
-    ///todo:Ensure conversion type for employee skills
     private Employee convertEmployeeDTOToEntity(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO, employee);
@@ -109,22 +120,28 @@ public class UserController {
      * This method converts a list of ids to a list of Pets
      */
     private List<Pet> convertPetIdsToPets(List<Long> petIds) {
-        List<Pet> pets = new ArrayList<>();
-        for(Long id: petIds) {
-            pets.add(petService.getPetById(id));
+        if(petIds != null) {
+            List<Pet> pets = new ArrayList<>();
+            for(Long id: petIds) {
+                pets.add(petService.getPetById(id));
+            }
+            return pets;
         }
-        return pets;
+        return null;
     }
 
     /**
      * This method creates a list of ids for the employee list
      */
     private List<Long> convertPetIdList(List<Pet> pets) {
-        List<Long> ids = new ArrayList<>();
-        for(Pet pet: pets) {
-            ids.add(pet.getId());
+        if (pets != null) {
+            List<Long> ids = new ArrayList<>();
+            for(Pet pet: pets) {
+                ids.add(pet.getId());
+            }
+            return ids;
         }
-        return ids;
+       return null;
     }
 
 }

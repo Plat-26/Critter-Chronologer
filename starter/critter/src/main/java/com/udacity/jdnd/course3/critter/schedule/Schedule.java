@@ -3,7 +3,6 @@ package com.udacity.jdnd.course3.critter.schedule;
 import com.udacity.jdnd.course3.critter.pet.Pet;
 import com.udacity.jdnd.course3.critter.user.Employee;
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
-import com.udacity.jdnd.course3.critter.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -19,9 +18,11 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @JoinColumn
     @OneToMany(cascade = CascadeType.ALL)
     private List<Employee> employees = new ArrayList<>();
 
+    @JoinColumn
     @OneToMany(cascade = CascadeType.ALL)
     private List<Pet> pets = new ArrayList<>();
 

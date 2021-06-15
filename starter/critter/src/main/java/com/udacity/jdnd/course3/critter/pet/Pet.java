@@ -1,7 +1,7 @@
 package com.udacity.jdnd.course3.critter.pet;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.udacity.jdnd.course3.critter.user.User;
+import com.udacity.jdnd.course3.critter.user.Customer;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
@@ -22,14 +22,14 @@ public class Pet {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnoreProperties("pets")
-    private User customer;
+    private Customer customer;
 
     private LocalDate birthDate;
 
     @Column(length = 512)
     private String notes;
 
-    public Pet(long id, PetType type, String name, User customer, LocalDate birthDate, String notes) {
+    public Pet(long id, PetType type, String name, Customer customer, LocalDate birthDate, String notes) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -65,11 +65,11 @@ public class Pet {
         this.name = name;
     }
 
-    public User getCustomer() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(User customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 

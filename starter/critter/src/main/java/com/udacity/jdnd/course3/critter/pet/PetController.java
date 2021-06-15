@@ -12,8 +12,8 @@ import java.util.List;
 /**
  * Handles web requests related to Pets.
  */
-//@RestController
-//@RequestMapping("/pet")
+@RestController
+@RequestMapping("/pet")
 public class PetController {
 
     private final PetService petService;
@@ -27,8 +27,9 @@ public class PetController {
         this.userService = userService;
     }
 
-    @PostMapping
-    public PetDTO savePet(@RequestBody PetDTO petDTO) {
+    @PostMapping("/{ownerId}")
+    public PetDTO savePet(@RequestBody PetDTO petDTO, @PathVariable long ownerId) {
+        petDTO.setOwnerId(ownerId);
         Pet pet = petService.createPet(convertPetDTOToEntity(petDTO));
         return convertPetEntityToDTO(pet);
     }

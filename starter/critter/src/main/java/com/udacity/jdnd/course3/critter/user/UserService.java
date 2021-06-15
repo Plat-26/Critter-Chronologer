@@ -2,7 +2,7 @@ package com.udacity.jdnd.course3.critter.user;
 
 import org.springframework.stereotype.Service;
 
-//@Service
+@Service
 public class UserService {
 
     private final UserRepository userRepository;

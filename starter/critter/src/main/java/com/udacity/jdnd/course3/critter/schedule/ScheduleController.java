@@ -15,8 +15,8 @@ import java.util.List;
 /**
  * Handles web requests related to Schedules.
  */
-//@RestController
-//@RequestMapping("/schedule")
+@RestController
+@RequestMapping("/schedule")
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
@@ -91,8 +91,8 @@ public class ScheduleController {
      */
     private List<Long> convertToEmployeeIdList(List<Employee> employees) {
         List<Long> ids = new ArrayList<>();
-        for(User user: employees) {
-            ids.add(user.getId());
+        for(Employee employee: employees) {
+            ids.add(employee.getId());
         }
         return ids;
     }
@@ -101,6 +101,9 @@ public class ScheduleController {
      * This method creates a list of ids for the employee list
      */
     private List<Long> convertPetIdList(List<Pet> pets) {
+        if(pets == null) {
+            return new ArrayList<>();
+        }
         List<Long> ids = new ArrayList<>();
         for(Pet pet: pets) {
             ids.add(pet.getId());
@@ -112,6 +115,9 @@ public class ScheduleController {
      * This method converts a list of ids to a list of Pets
      */
     private List<Pet> convertIdsToListOfPets(List<Long> petIds) {
+        if(petIds == null) {
+            return new ArrayList<>();
+        }
         List<Pet> pets = new ArrayList<>();
         for(Long id: petIds) {
             pets.add(petService.getPetById(id));
